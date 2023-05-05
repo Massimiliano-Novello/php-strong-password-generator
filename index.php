@@ -1,3 +1,16 @@
+<?php
+    session_start();
+    include_once  __DIR__ . "./functions.php";
+    if(isset($_GET["password"])) {
+        $password = $_GET["password"];
+        $randomPsw = generatePassword();
+        $_SESSION["password"] = $randomPsw;
+        header('location: password.php');
+        exit;
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,36 +19,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
         <div class="title text-center">
             <h1>STRONG PASSWORD GENERATOR</h1>
-            <h2>Genera una password sicura</h2>
+            <h2 class="text-white">Genera una password sicura</h2>
         </div>
-            <?php
-                $comb = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@!?';
-                $pass = []; 
-                $userNumber = $_GET["password"];
-                $combLen = strlen($comb) - 1; 
-                if (isset($_GET["password"])) {
-                    for ($i = 0; $i < $userNumber; $i++) {
-                        $n = rand(0, $combLen);
-                        $pass[$i] = $comb[$n];
-                    }
-                    print(implode($pass)); 
-                    echo $pass;
-                }
-            ?>
-
-        <form action="index.php" method="GET">
-            <div class="mt-5">
-                <label for="password">Lunghezza password</label>
-                <input type="text" name="password" id="password">
-            </div>
-            <button type="submit">Genera</button>
-        </form>
+        <div class="content">
+            <form action="index.php" method="GET">
+                <div class="mt-5 d-flex justify-content-between">
+                    <label for="password" class="text-white">Lunghezza password:</label>
+                    <input type="number" min="5" max="18" name="password" id="password" value="<?echo $_GET["password"]?>">
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Genera</button>
+                    <button type="reset" class="btn btn-primary">Annulla</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>
